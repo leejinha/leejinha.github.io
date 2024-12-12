@@ -344,7 +344,7 @@
         // 호출이 성공하면 이 함수가 실행됩니다.
         console.log("load file : ", data);
 
-        var html ='<div ><img src=`"' + data.urls + '`"></div>';
+        var html = '<div ><img src=\"' + data.urls + '\"></div>';
         console.log("html : ", html);
         $('#json_test').html(html);
 

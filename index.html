@@ -344,16 +344,11 @@
         // 호출이 성공하면 이 함수가 실행됩니다.
         console.log("load file : ", data);
 
-        str = '<div class="col-4 col-6-medium col-12-small">';
-            $.each(data , function(i){
-                str += '<section class="box style1">
-                    <span class="icon featured fa-comments"></span>
-                    <h3>Consequat lorem</h3>
-                    <p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
-                </section>';
-                str += '</div>';
-            });
-        $('.json_test').append(str);
+        var html ='';
+        $.each(data, function(i,e) {
+        html += 'LLLLLLLLLLLLLLLLLLLLLL';
+        });
+        $('test_json').html(html);
 
     }).fail(function(jqXHR, textStatus, errorThrown) {
         // 호출이 실패하면 이 함수가 실행됩니다.

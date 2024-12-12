@@ -10,11 +10,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Notable&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
+        body,html {height:100%;margin:0;padding:0}
+    ul, li, dl, dt, dd, p, span{margin:0;padding:0}
+    a{text-decoration:none}
+    li{list-style:none}
+    a{text-decoration:none}
+    *, :after, :before{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+
+    :root{--ani:cubic-bezier(.32,.94,.6,1);--k-font:'Pretendard';--e-font:'Italiana'}
+
+    #atc01{overflow:hidden;position:relative;z-index:2;padding:50px 50px 180px;font-size:15px;line-height:1.8;color:#111;font-family:var(--e-font), var(--k-font)}
+    #atc01 .bg{display:block;width:130%;height:400px;position:absolute;bottom:0;left:-15%;border-radius:100%;background-color:#fff;transition:transform .6s var(--ani)}
+    #atc01 .inner{display:flex;align-items: center;position:relative;width:1320px;margin:0 auto;padding-top:120px}
+    #atc01 .inner:after{display:block;content:"";visibility:hidden;clear:both}
+
+    /* 텍스트 */
+    #atc01 .txt_area{position:relative;z-index:2;transform:translateY(-60px);width:50%}
+    #atc01 .txt_area .stxt{font-weight:bold}
+    #atc01 .txt_area .btxt{margin:50px 0 60px;font-size:97px;line-height:1.1}
+    #atc01 .txt_area .btxt span{padding-left:100px}
+    #atc01 .txt_area .btxt b{font-size:77px;font-weight:normal;font-family:'Notable','notokr-bold'}
+    #atc01 .txt_area .stxt2{padding-left:220px;font-weight:bold;letter-spacing:.3px}
+    #atc01 .view_btn{display:inline-block;position:relative;margin-top:60px;text-align:center;line-height:105px}
+    #atc01 .view_btn svg{position:relative;color:#fff}
+    #atc01 .view_btn:before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:105px;height:105px;border-radius:50%;background-color:#111;box-shadow:20px 20px 40px rgba(0,0,0,.25);transition:all .3s var(--ani)}
+    #atc01 .view_btn:hover:before{width:95px;height:95px;box-shadow:20px 20px 30px rgba(0,0,0,.3)}
+    #atc01 .view_btn.animated{transform:translateX(-80px);animation-delay:.4s}
+    /* pager */
+    #atc01 .pager_dot{margin-top:50px;padding-right:90px;text-align:right}
+    #atc01 .pager_dot .bullet{display:inline-block;opacity:1;vertical-align:middle;width:6px;height:6px;border-radius:50%;background-color:#111;cursor:pointer;transition:all .2s var(--ani)}
+    #atc01 .pager_dot span+span{margin-left:12px}
+    #atc01 .pager_dot span.active{width:14px;height:14px}
     /* 이미지 */
     #atc01 .slide{position:relative;z-index:1;transform:translateY(80px);width:50%;margin-left:-90px}
-    #atc01 .slide li{overflow:visible;width:400px;height:800px;text-align:center;color:#fff;transition-timing-function:var(--ani)}
+    #atc01 .slide li{overflow:visible;width:auto;max-width:400px;height:auto;text-align:center;color:#fff;transition-timing-function:var(--ani)}
     #atc01 .slide li .img{overflow:hidden;border-radius:26px;background-color:#000;transition:all .2s}
     #atc01 .slide li .img img{opacity:.7;transition:all .2s}
     #atc01 .slide .swiper-slide-active .img{box-shadow:34px 34px 60px rgba(0,0,0,.25)}
@@ -54,7 +89,7 @@
     #atc01 .view_btn:hover:before{width:45px;height:45px}
     #atc01 .pager_dot{margin:40px 0 0}
     }
-            @media (max-width:480px){
+    @media (max-width:480px){
     #atc01{padding:30px 30px 80px}
     #atc01 .inner{padding-top:30px}
     #atc01 .txt_area .btxt{margin:30px;font-size:33px}
@@ -70,9 +105,9 @@
 <nav id="nav">
     <ul class="container">
         <li><a href="#top">Top</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="sub_1.html">Work</a></li>
+        <li><a href="sub_2.html">Portfolio</a></li>
+        <li><a href="sub_3.html">Contact</a></li>
     </ul>
 </nav>
 
@@ -96,11 +131,27 @@
 </article>
 -->
 <article id="atc01" class="wrapper style1">
+    <div class="col-8 col-7-large col-12-medium">
+        <header>
+            <h1>Hi. I'm <strong>Hapublic</strong>.</h1>
+        </header>
+        <!--
+        <a href="#work" class="button large scrolly">art</a>
+        <a href="#work" class="button large scrolly">design</a>
+        -->
+    </div>
+    <div id="oval1"class="bg"></div>
     <div class="inner">
-        <div class="col-8 col-7-large col-12-medium">
-            <header>
-                <h1>Hi. I'm <strong>Hapublic</strong>.</h1>
-            </header>
+
+        <div class="txt_area">
+            <p class="btxt">
+                My Perspective,<br />
+                <span><b> My Art</b></span>
+            </p>
+            <div class="stxt2">
+                <a class="view_btn" href="/"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+            </div>
+            <div class="pager_dot"></div>
         </div>
         <div class="slide swiper-container">
             <ul class="swiper-wrapper">
@@ -285,50 +336,63 @@
 <script src="assets/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-        var atc01Swiper = new Swiper("#atc01 .slide", {
-          effect: "creative",
-          loop : "true",
-          slidesPerView: '3',
-          grabCursor: true,
-          centeredSlides: true,
-          slidesPerView: "auto",
-          speed:600,
-          autoplay: {
-            delay: 1800,
-            disableOnInteraction: false,
-          },
+    // JSON 파일 경로
+    let jsonFilePath = 'main_data.json';
+
+    // JSON 파일 비동기적으로 호출
+    $.getJSON(jsonFilePath, function(data) {
+        // 호출이 성공하면 이 함수가 실행됩니다.
+        console.log("load file : ", data);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        // 호출이 실패하면 이 함수가 실행됩니다.
+        console.log(location.origin);
+        console.error('JSON 파일 호출 실패:', textStatus, errorThrown);
+    });
+
+    var atc01Swiper = new Swiper("#atc01 .slide", {
+      effect: "creative",
+      loop : "true",
+      slidesPerView: '3',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      speed:600,
+      autoplay: {
+        delay: 1800,
+        disableOnInteraction: false,
+      },
+      creativeEffect: {
+        limitProgress:1,
+        prev: {
+          opacity:1,
+          scale: 0.9,
+          rotate:[0,25,0],
+          translate: ["-50%", 0, -200],
+        },
+        next: {
+          scale: 0.9,
+          rotate:[0,-25,0],
+          translate: ["50%", 0, -200],
+        },
+      },
+      pagination: {
+        el: '#atc01 .pager_dot',
+        bulletClass: 'bullet',
+        bulletActiveClass: 'active',
+        type: 'bullets',
+        clickable: true
+      },
+      breakpoints: {
+        768: {
           creativeEffect: {
-            limitProgress:1,
+            limitProgress:2,
             prev: {
-              opacity:1,
-              scale: 0.9,
-              rotate:[0,25,0],
-              translate: ["-50%", 0, -200],
-            },
-            next: {
-              scale: 0.9,
-              rotate:[0,-25,0],
-              translate: ["50%", 0, -200],
+              opacity:0,
             },
           },
-          pagination: {
-            el: '#atc01 .pager_dot',
-            bulletClass: 'bullet',
-            bulletActiveClass: 'active',
-            type: 'bullets',
-            clickable: true
-          },
-          breakpoints: {
-            768: {
-              creativeEffect: {
-                limitProgress:2,
-                prev: {
-                  opacity:0,
-                },
-              },
-            },
-          },
-        });
+        },
+      },
+    });
     </script>
 
 </body>

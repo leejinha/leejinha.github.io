@@ -343,9 +343,10 @@
     $.getJSON(jsonFilePath, function(data) {
         // 호출이 성공하면 이 함수가 실행됩니다.
         console.log("load file : ", data);
-        console.log("html : ", html);
+
         var html ='~~~~~~~~~~~~~~~~~~~~';
-        $('test_json').html(html);
+        console.log("html : ", html);
+        $('#test_json').html(html);
 
     }).fail(function(jqXHR, textStatus, errorThrown) {
         // 호출이 실패하면 이 함수가 실행됩니다.

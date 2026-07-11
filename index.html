@@ -16,7 +16,7 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-tr from-slate-50 to-indigo-50">
 
-    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden p-8 transition-all duration-300">
+    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden p-8 transition-all duration-300 relative">
         <!-- Start Screen -->
         <div id="start-screen" class="text-center fade-in">
             <div class="mb-6 inline-flex justify-center items-center w-24 h-24 rounded-full bg-indigo-50 text-indigo-600 pulse-soft">
@@ -64,14 +64,43 @@
                 <!-- SVG illustration will be loaded here -->
             </div>
 
-            <p id="result-description" class="text-slate-600 mb-8 leading-relaxed text-sm text-left bg-slate-50 p-5 rounded-2xl border border-slate-100">
+            <p id="result-description" class="text-slate-600 mb-6 leading-relaxed text-sm text-left bg-slate-50 p-5 rounded-2xl border border-slate-100">
                 결과 상세 설명이 들어갑니다.
             </p>
+
+            <!-- Share and Actions Section -->
+            <div class="border-t border-slate-100 pt-6 mb-6">
+                <p class="text-xs font-semibold text-slate-400 mb-3 tracking-wider">결과 공유하기</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Copy Link -->
+                    <button onclick="shareLink()" class="flex flex-col items-center justify-center p-3.5 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-indigo-50 hover:border-indigo-100 transition group">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-slate-600 group-hover:text-indigo-600 mb-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                        </svg>
+                        <span class="text-xs font-semibold text-slate-600 group-hover:text-indigo-900">링크 복사</span>
+                    </button>
+                    <!-- Copy Results Text -->
+                    <button onclick="shareText()" class="flex flex-col items-center justify-center p-3.5 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-indigo-50 hover:border-indigo-100 transition group">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-slate-600 group-hover:text-indigo-600 mb-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.25 2.25 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5m-9-9h9c.621 0 1.125.504 1.125 1.125v7.5c0 .621-.504 1.125-1.125 1.125h-9a1.125 1.125 0 0 1-1.125-1.125v-7.5c0-.621.504-1.125 1.125-1.125Z" />
+                        </svg>
+                        <span class="text-xs font-semibold text-slate-600 group-hover:text-indigo-900">결과 복사</span>
+                    </button>
+                </div>
+            </div>
             
             <button onclick="location.reload()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-800 transition active:scale-[0.98]">
                 다시 테스트하기
             </button>
         </div>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-full text-xs font-bold shadow-lg opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-emerald-400">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span id="toast-message">클립보드에 복사되었습니다!</span>
     </div>
 
     <script>
@@ -204,7 +233,7 @@
                 <path d="M82 85C84 83 86 83 88 85" stroke="#14532D" stroke-width="2.5" stroke-linecap="round"/>
                 <path d="M94 85C96 83 98 83 100 85" stroke="#14532D" stroke-width="2.5" stroke-linecap="round"/>
                 <!-- 미소 -->
-                <path d="M87 95C90 97 93 97 95 95" stroke="#14532D" stroke-width="2" stroke-linecap="round"/>
+                <path d="M87 95C90 97 93 97 95 95" stroke="#14532D" stroke-width="2.5" stroke-linecap="round"/>
                 <!-- 김이 모락모락 나는 찻잔 -->
                 <rect x="122" y="128" width="16" height="12" rx="3" fill="#F43F5E"/>
                 <path d="M138 131C141 131 142 134 141 136C140 138 138 137 138 137" stroke="#F43F5E" stroke-width="2" stroke-linecap="round"/>
@@ -309,6 +338,7 @@
 
         let currentIdx = 0;
         let score = 0;
+        let finalResult = null;
 
         function startTest() {
             document.getElementById('start-screen').classList.add('hidden');
@@ -349,8 +379,6 @@
             document.getElementById('question-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
 
-            let finalResult;
-            
             // 점수 구간 상세 분할 (최소 10점 ~ 최대 40점)
             if (score <= 15) {
                 finalResult = results[0]; // Lv.1 입문자
@@ -367,6 +395,58 @@
             document.getElementById('result-title').innerText = finalResult.title;
             document.getElementById('result-image-container').innerHTML = finalResult.graphic;
             document.getElementById('result-description').innerText = finalResult.desc;
+        }
+
+        // 토스트 알림 헬퍼 함수
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.innerText = message;
+            
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // 텍스트를 클립보드에 복사하는 범용 함수 (iFrame 호환)
+        function copyToClipboard(text, successMsg) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.top = '0';
+            textarea.style.left = '0';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast(successMsg);
+                } else {
+                    showToast("복사에 실패했습니다. 수동으로 복사해주세요.");
+                }
+            } catch (err) {
+                showToast("오류가 발생하여 복사할 수 없습니다.");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // 1. 링크 복사 기능
+        function shareLink() {
+            const url = window.location.href;
+            copyToClipboard(url, "테스트 링크가 복사되었습니다!");
+        }
+
+        // 2. 결과 내용 복사 기능
+        function shareText() {
+            if (!finalResult) return;
+            const textToShare = `[고독력 레벨 테스트 결과]\n\n나의 고독력은... ✨${finalResult.title}✨ 입니다!\n\n"${finalResult.desc.substring(0, 100)}..."\n\n지금 여러분의 고독력을 측정해보세요!\n👉 ${window.location.href}`;
+            copyToClipboard(textToShare, "결과 요약 텍스트가 복사되었습니다!");
         }
     </script>
 </body>

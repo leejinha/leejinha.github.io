@@ -9,11 +9,14 @@
     <style>
         :root {
             --primary-left: #3b82f6; /* 진보·좌파 성향 블루 */
-            --primary-right: #ef4444; /* 보수·우파 성향 레드 */
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --primary-right: #ef4444; /* 보수·우파 성향  */
+            --btn-main: #002855;     /* 요청하신 메인 네이비 컬러 */
+            --btn-main-hover: #001f42; /* 메인 네이비 호버 색상 */
+            --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #d1dbe5 100%); /* 네이비와 어울리는 은은한 블루 그레이 배경 */
             --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #4b5563;
+            --text-main: #0f172a;    /* 조금 더 깊이감 있는 네이비 블랙 */
+            --text-muted: #475569;   /* 조화로운 톤의 뮤트 가이드 텍스트 */
+            --shadow-color: rgba(0, 40, 85, 0.08); /* 네이비 톤에 맞춘 부드러운 그림자 음영 */
         }
 
         * {
@@ -35,7 +38,7 @@
         .container {
             background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px var(--shadow-color);
             width: 100%;
             max-width: 580px;
             padding: 40px 30px;
@@ -62,7 +65,7 @@
 
         /* 공통 버튼 스타일 */
         .btn {
-            background: #111827;
+            background: var(--btn-main);
             color: white;
             border: none;
             padding: 14px 24px;
@@ -70,7 +73,7 @@
             font-weight: 700;
             border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -81,17 +84,19 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            background: #1f2937;
+            background: var(--btn-main-hover);
+            box-shadow: 0 5px 15px rgba(0, 40, 85, 0.2);
         }
 
         .btn-sub {
-            background: #f3f4f6;
-            color: var(--text-main);
-            border: 1px solid #e5e7eb;
+            background: #f0f4f8; /* 네이비와 매칭되는 밝은 블루그레이 음영 */
+            color: var(--btn-main);
+            border: 1px solid #dbe3eb;
         }
 
         .btn-sub:hover {
-            background: #e5e7eb;
+            background: #e1ebf5;
+            box-shadow: 0 5px 15px rgba(0, 40, 85, 0.08);
         }
 
         .btn-instagram {
@@ -101,6 +106,7 @@
         .btn-instagram:hover {
             opacity: 0.9;
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 5px 15px rgba(220, 39, 67, 0.2);
         }
         
         /* 인스타그램 SVG 아이콘 스타일 */
@@ -118,7 +124,7 @@
         .progress-bar-container {
             width: 100%;
             height: 6px;
-            background: #e5e7eb;
+            background: #e2e8f0;
             border-radius: 3px;
             margin-bottom: 30px;
             overflow: hidden;
@@ -154,8 +160,8 @@
         }
 
         .option-btn {
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
             color: var(--text-main);
             padding: 14px 20px;
             font-size: 14px;
@@ -169,8 +175,8 @@
         }
 
         .option-btn:hover {
-            background: #f3f4f6;
-            border-color: #9ca3af;
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
         /* 결과 화면 */
@@ -198,10 +204,11 @@
             line-height: 1.7;
             margin-bottom: 25px;
             text-align: left;
-            background: #f9fafb;
+            background: #f8fafc;
             padding: 20px;
             border-radius: 16px;
             word-break: keep-all;
+            border: 1px solid #f1f5f9;
         }
 
         /* 게이지 바 */
@@ -212,7 +219,7 @@
         .spectrum-bar {
             height: 12px;
             border-radius: 6px;
-            background: linear-gradient(to right, var(--primary-left), #e5e7eb, var(--primary-right));
+            background: linear-gradient(to right, var(--primary-left), #e2e8f0, var(--primary-right));
             width: 100%;
         }
         .spectrum-pointer {
@@ -220,11 +227,12 @@
             top: -4px;
             width: 20px;
             height: 20px;
-            background: #111827;
+            background: var(--btn-main);
             border: 3px solid #fff;
             border-radius: 50%;
             transform: translateX(-50%);
             transition: left 0.5s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .spectrum-labels {
             display: flex;
@@ -311,7 +319,7 @@
                 상세 설명이 들어가는 자리입니다.
             </div>
 
-            <!-- 하단 버튼 및 링크 영역 (요청하신 문구 수정 완료) -->
+            <!-- 하단 버튼 및 링크 영역 -->
             <div class="action-group">
                 <div class="action-row">
                     <button class="btn btn-sub" onclick="shareResult()">결과 링크 복사</button>
@@ -378,7 +386,7 @@
             {
                 q: "6. 내 서재에 있는 책 저자들의 주요 이력이나 정체성은?",
                 options: [
-                    { text: "사회 운동가, 인권 변화사, 비판적 학자 등 현장 중심 인물", val: 2 },
+                    { text: "사회 운동가, 인권 변호사, 비판적 학자 등 현장 중심 인물", val: 2 },
                     { text: "대중 지식인, 문화 평론가, 온건한 성향의 대학교수나 연구원", val: 1 },
                     { text: "주류 학계의 교수, 객관적 데이터 중심의 분석가, 전문 칼럼니스트", val: -1 },
                     { text: "글로벌 기업 CEO, 창업가, 시장 중심 경제학자, 보수 평론가", val: -2 }

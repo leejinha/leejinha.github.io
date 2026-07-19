@@ -65,8 +65,8 @@
             background: #111827;
             color: white;
             border: none;
-            padding: 14px 24px; /* 모바일 대응을 위해 좌우 여백 살짝 축소 */
-            font-size: 15px;    /* 모바일 가독성을 위해 1px 축소 */
+            padding: 14px 24px;
+            font-size: 15px;
             font-weight: 700;
             border-radius: 30px;
             cursor: pointer;
@@ -76,7 +76,7 @@
             justify-content: center;
             gap: 8px;
             text-decoration: none;
-            white-space: nowrap; /* 글자가 절대 두 줄로 쪼개지지 않도록 강제 */
+            white-space: nowrap;
         }
 
         .btn:hover {
@@ -101,6 +101,13 @@
         .btn-instagram:hover {
             opacity: 0.9;
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+        
+        /* 인스타그램 SVG 아이콘 스타일 */
+        .btn-instagram svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
         }
 
         /* 테스트 화면 */
@@ -243,19 +250,19 @@
             flex: 1;
         }
 
-        /* 📱 모바일 화면 최적화 미디어 쿼리 추가 */
+        /* 모바일 화면 최적화 미디어 쿼리 */
         @media (max-width: 480px) {
             .container {
                 padding: 30px 20px;
             }
             .action-row {
-                flex-direction: column; /* 모바일에선 가로 배열 대신 위아래로 쌓이게 변경 */
+                flex-direction: column;
                 gap: 10px;
             }
             .btn {
-                width: 100%; /* 버튼이 너비를 꽉 채워 터치하기 편하게 변경 */
+                width: 100%;
                 padding: 14px 16px;
-                font-size: 14px; /* 작은 화면에서 텍스트 밀림 완전 방지 */
+                font-size: 14px;
             }
         }
     </style>
@@ -304,14 +311,18 @@
                 상세 설명이 들어가는 자리입니다.
             </div>
 
-            <!-- 하단 버튼 및 링크 영역 -->
+            <!-- 하단 버튼 및 링크 영역 (요청하신 문구 수정 완료) -->
             <div class="action-group">
                 <div class="action-row">
-                    <button class="btn btn-sub" onclick="shareResult()">🔗 결과 링크 복사</button>
-                    <button class="btn" onclick="restartQuiz()">🔄 다시 테스트하기</button>
+                    <button class="btn btn-sub" onclick="shareResult()">결과 링크 복사</button>
+                    <button class="btn" onclick="restartQuiz()">다시 테스트하기</button>
                 </div>
                 <a href="https://www.instagram.com/hapublic.basecamp" target="_blank" class="btn btn-instagram">
-                    📸 @hapublic.basecamp 인스타 가기
+                    <!-- 인스타그램 공식 SVG 로고 -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                    @hapublic.basecamp 바로 가기
                 </a>
             </div>
         </div>
@@ -367,7 +378,7 @@
             {
                 q: "6. 내 서재에 있는 책 저자들의 주요 이력이나 정체성은?",
                 options: [
-                    { text: "사회 운동가, 인권 변호사, 비판적 학자 등 현장 중심 인물", val: 2 },
+                    { text: "사회 운동가, 인권 변화사, 비판적 학자 등 현장 중심 인물", val: 2 },
                     { text: "대중 지식인, 문화 평론가, 온건한 성향의 대학교수나 연구원", val: 1 },
                     { text: "주류 학계의 교수, 객관적 데이터 중심의 분석가, 전문 칼럼니스트", val: -1 },
                     { text: "글로벌 기업 CEO, 창업가, 시장 중심 경제학자, 보수 평론가", val: -2 }

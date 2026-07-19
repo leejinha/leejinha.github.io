@@ -43,40 +43,35 @@
             max-width: 580px;
             text-align: center;
             transition: all 0.3s ease;
-            overflow: hidden; /* 타이틀 박스의 둥근 모서리 적용을 위해 필요 */
+            overflow: hidden;
         }
 
-        /* 📌 상단 타이틀 영역 강조 */
+        /* 📌 상단 타이틀 영역 강조 (메인 타이틀 단독 배치 및 디자인 강화) */
         .title-box {
             background-color: var(--btn-main);
-            padding: 35px 20px;
+            padding: 40px 20px;
             color: #ffffff;
+            border-bottom: 4px solid #001a38;
         }
 
         .title-box h1 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            letter-spacing: -0.7px;
+            line-height: 1.3;
         }
 
-        .title-box .subtitle {
-            font-size: 15px;
-            font-weight: 300;
-            color: #cbd5e1;
-        }
-
-        /* 메인 콘텐츠 영역 (패딩 분리) */
+        /* 메인 콘텐츠 영역 */
         .content-box {
             padding: 40px 30px;
         }
 
-        /* 시작 화면 줄글 스타일 수정 */
+        /* 시작 화면 안내글 스타일 */
         .start-screen p {
             font-size: 15px;
             color: var(--text-muted);
             margin-bottom: 35px;
-            line-height: 1.6;
+            line-height: 1.7;
             word-break: keep-all;
         }
 
@@ -294,16 +289,15 @@
 <body>
 
     <div class="container">
-        <!-- 📌 1. 상단 배너 레이아웃 적용 -->
+        <!-- 📌 상단 배너 레이아웃 (메인 타이틀 단독 배치 및 예쁘게 정돈) -->
         <div class="title-box" id="main-title-box">
-            <h1>"너... 그런 책 읽니?"</h1>
-            <div class="subtitle">내 서재 속 출판사 성향 테스트</div>
+            <h1>내 서재 속 출판사 성향 테스트</h1>
         </div>
 
         <div class="content-box">
-            <!-- 시작 화면 (문구 축소 및 아이콘 제거) -->
+            <!-- 시작 화면 -->
             <div class="start-screen" id="start-screen">
-                <p>내가 고른 책장만 봐도 숨겨진 사상이 보인다?! 침대 머리맡에 둔 책들의 진짜 정체를 탈탈 털어드립니다. 10개의 무작위 질문을 통해 서재를 지배한 출판사들의 찐한 이념 스펙트럼을 지금 확인해 보세요.</p>
+                <p>내가 고른 책장만 봐도 숨겨진 사회적 가치관이 보인다?! 침대 머리맡에 둔 책들의 진짜 정체를 분석해 드립니다. 10개의 무작위 질문을 통해 서재를 지배한 출판사들의 찐한 이념 스펙트럼을 지금 확인해 보세요.</p>
                 <button class="btn" onclick="startQuiz()">내 서재 털러가기 🚀</button>
             </div>
 
@@ -475,7 +469,7 @@
 
         function startQuiz() {
             startScreen.style.display = 'none';
-            mainTitleBox.style.display = 'none'; // 테스트 중에는 상단 큰 타이틀 박스를 숨겨 집중도 향상
+            mainTitleBox.style.display = 'none'; 
             quizScreen.style.display = 'block';
             resultScreen.style.display = 'none';
             currentIdx = 0;
@@ -554,7 +548,7 @@
         }
 
         function restartQuiz() {
-            mainTitleBox.style.display = 'block'; // 재시작 시 상단 타이틀 복원
+            mainTitleBox.style.display = 'block'; 
             startQuiz();
         }
     </script>

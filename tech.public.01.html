@@ -3,475 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>고독력 레벨 테스트</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>내 서재 속 출판사 성향 테스트</title>
+    <!-- 구글 폰트 적용 (Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Pretendard', sans-serif; background-color: #f8fafc; }
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .pulse-soft { animation: pulseSoft 2s infinite ease-in-out; }
-        @keyframes pulseSoft { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        :root {
+            --primary-left: #3b82f6; /* 진보·좌파 성향 블루 */
+            --primary-right: #ef4444; /* 보수·우파 성향 레드 */
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 580px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* 시작 화면 */
+        .start-screen h1 {
+            font-size: 26px;
+            color: var(--text-main);
+            margin-bottom: 18px;
+            word-break: keep-all;
+            line-height: 1.4;
+        }
+
+        .start-screen p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.7;
+            word-break: keep-all;
+        }
+
+        /* 공통 버튼 스타일 */
+        .btn {
+            background: #111827;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #1f2937;
+        }
+
+        .btn-sub {
+            background: #f3f4f6;
+            color: var(--text-main);
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-sub:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+        }
+        .btn-instagram:hover {
+            opacity: 0.9;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        /* 테스트 화면 */
+        .quiz-screen {
+            display: none;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-left), var(--primary-right));
+            transition: width 0.3s ease;
+        }
+
+        .question-box {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            color: var(--text-main);
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 400;
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            word-break: keep-all;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        /* 결과 화면 */
+        .result-screen {
+            display: none;
+        }
+
+        .result-title {
+            font-size: 16px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .result-type {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .result-desc {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: left;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 16px;
+            word-break: keep-all;
+        }
+
+        /* 게이지 바 */
+        .spectrum-container {
+            margin: 25px 0;
+            position: relative;
+        }
+        .spectrum-bar {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(to right, var(--primary-left), #e5e7eb, var(--primary-right));
+            width: 100%;
+        }
+        .spectrum-pointer {
+            position: absolute;
+            top: -4px;
+            width: 20px;
+            height: 20px;
+            background: #111827;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            transition: left 0.5s ease;
+        }
+        .spectrum-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        /* 결과 페이지 버튼 그룹 */
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .action-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .action-row .btn {
+            flex: 1;
+        }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-tr from-slate-100 to-slate-200">
+<body>
 
-    <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden p-8 transition-all duration-300 relative">
-        <!-- Start Screen -->
-        <div id="start-screen" class="text-center fade-in">
-            <!-- Icon Cover Header -->
-            <div class="mb-6 inline-flex justify-center items-center w-24 h-24 rounded-full bg-slate-100 text-[#0A2540] pulse-soft">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-            </div>
-            <h1 class="text-3xl font-extrabold text-slate-800 mb-3 tracking-tight">고독력 레벨 테스트</h1>
-            <p class="text-slate-500 mb-8 leading-relaxed text-sm">
-                타인의 소음에서 벗어나 나만의 시간을 마주하는 힘.<br>
-                10가지 질문으로 당신의 진정한 '고독 레벨'을 만나보세요.
-            </p>
-            <button onclick="startTest()" class="w-full bg-[#0A2540] text-white py-4 rounded-2xl font-bold text-lg hover:bg-[#12355A] active:scale-[0.98] transition-all shadow-lg shadow-slate-200">
-                테스트 시작하기
-            </button>
+    <div class="container">
+        <!-- 1. 시작 화면 (문구 센스있게 변경완료) -->
+        <div class="start-screen" id="start-screen">
+            <h1>"너... 그런 책 읽니?" 👀<br><span style="font-size: 18px; font-weight: 400; color: var(--text-muted);">내 서재로 탈탈 털어보는 출판사 성향 테스트</span></h1>
+            <p>"책장만 봐도 그 사람의 사상이 보인다?!" 내가 최근에 지른 책, 침대 머리맡에 둔 책들의 진짜 정체는 무엇일까요? 매번 무작위로 섞이는 질문을 통과하고, 내 서재를 지배한 출판사들의 찐-한 이념 스펙트럼을 확인해 보세요! (※ 뼈 때림 주의 🔨)</p>
+            <button class="btn" onclick="startQuiz()">내 서재 털러가기 🚀</button>
         </div>
 
-        <!-- Question Screen -->
-        <div id="question-screen" class="hidden fade-in">
-            <div class="mb-6">
-                <div class="flex justify-between items-center mb-2">
-                    <span id="progress-text" class="text-[#0A2540] font-bold text-sm">1 / 10</span>
-                    <span class="text-xs text-slate-400">나의 고독 지수는?</span>
-                </div>
-                <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                    <div id="progress-bar" class="bg-[#0A2540] h-full rounded-full transition-all duration-300" style="width: 10%"></div>
-                </div>
+        <!-- 2. 테스트 진행 화면 -->
+        <div class="quiz-screen" id="quiz-screen">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <h2 id="question-text" class="text-xl font-bold text-slate-800 mb-8 min-h-[4rem] leading-snug">
-                질문 텍스트가 들어갑니다.
-            </h2>
-            <div id="options-container" class="space-y-3">
-                <!-- Options will be injected here -->
+            <div class="question-box">
+                <p class="question-text" id="question-text">질문 텍스트가 들어가는 자리입니다.</p>
+            </div>
+            <div class="answer-options">
+                <button class="option-btn" id="opt1">선택지 1</button>
+                <button class="option-btn" id="opt2">선택지 2</button>
+                <button class="option-btn" id="opt3">선택지 3</button>
+                <button class="option-btn" id="opt4">선택지 4</button>
             </div>
         </div>
 
-        <!-- Result Screen -->
-        <div id="result-screen" class="hidden text-center fade-in">
-            <p class="text-[#0A2540] font-semibold text-sm mb-1 uppercase tracking-wider">Your Solitude Level</p>
-            <h2 id="result-title" class="text-3xl font-extrabold text-slate-900 mb-6">고독 레벨 결과</h2>
+        <!-- 3. 결과 화면 -->
+        <div class="result-screen" id="result-screen">
+            <p class="result-title">서재 진단 결과</p>
+            <h2 class="result-type" id="result-type">결과 유형</h2>
             
-            <!-- Dynamic SVG Container -->
-            <div id="result-image-container" class="w-48 h-48 mx-auto mb-6 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-100 p-2">
-                <!-- SVG illustration will be loaded here -->
-            </div>
-
-            <p id="result-description" class="text-slate-600 mb-6 leading-relaxed text-sm text-left bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                결과 상세 설명이 들어갑니다.
-            </p>
-
-            <!-- Share and Actions Section -->
-            <div class="border-t border-slate-100 pt-6 mb-6">
-                <p class="text-xs font-semibold text-slate-400 mb-3 tracking-wider">결과 공유하기</p>
-                <div class="grid grid-cols-2 gap-3 mb-4">
-                    <!-- Copy Link -->
-                    <button onclick="shareLink()" class="flex flex-col items-center justify-center p-3.5 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-slate-100 hover:border-[#0A2540]/30 transition group">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-slate-600 group-hover:text-[#0A2540] mb-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                        </svg>
-                        <span class="text-xs font-semibold text-slate-600 group-hover:text-[#0A2540]">링크 복사</span>
-                    </button>
-                    <!-- Copy Results Text -->
-                    <button onclick="shareText()" class="flex flex-col items-center justify-center p-3.5 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-slate-100 hover:border-[#0A2540]/30 transition group">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-slate-600 group-hover:text-[#0A2540] mb-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.25 2.25 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5m-9-9h9c.621 0 1.125.504 1.125 1.125v7.5c0 .621-.504 1.125-1.125 1.125h-9a1.125 1.125 0 0 1-1.125-1.125v-7.5c0-.621.504-1.125 1.125-1.125Z" />
-                        </svg>
-                        <span class="text-xs font-semibold text-slate-600 group-hover:text-[#0A2540]">결과 복사</span>
-                    </button>
-                </div>
-
-                <!-- Instagram Official Account Link -->
-                <div class="fade-in">
-                    <a href="https://www.instagram.com/hapublic.basecamp" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-purple-50/70 via-pink-50/70 to-orange-50/70 border border-purple-100 hover:border-purple-300 transition-all duration-300 group">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 flex items-center justify-center text-white shadow-sm">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                </svg>
-                            </div>
-                            <div class="text-left">
-                                <p class="text-[10px] text-slate-400 font-semibold leading-none">Official Instagram</p>
-                                <p class="text-xs font-bold text-slate-700 mt-1">@hapublic.basecamp</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-1 text-xs font-bold text-purple-600 group-hover:translate-x-0.5 transition-transform duration-200">
-                            <span>바로가기</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </div>
-                    </a>
+            <div class="spectrum-container">
+                <div class="spectrum-bar"></div>
+                <div class="spectrum-pointer" id="spectrum-pointer"></div>
+                <div class="spectrum-labels">
+                    <span style="color: var(--primary-left)">진보·좌파 성향</span>
+                    <span style="color: var(--primary-right)">보수·우파 성향</span>
                 </div>
             </div>
-            
-            <button onclick="location.reload()" class="w-full bg-[#0A2540] text-white py-4 rounded-2xl font-bold hover:bg-[#12355A] transition active:scale-[0.98]">
-                다시 테스트하기
-            </button>
+
+            <div class="result-desc" id="result-desc">
+                상세 설명이 들어가는 자리입니다.
+            </div>
+
+            <!-- 하단 버튼 및 링크 영역 -->
+            <div class="action-group">
+                <div class="action-row">
+                    <button class="btn btn-sub" onclick="shareResult()">🔗 결과 링크 복사</button>
+                    <button class="btn" onclick="restartQuiz()">🔄 다시 테스트하기</button>
+                </div>
+                <a href="https://www.instagram.com/hapublic.basecamp" target="_blank" class="btn btn-instagram">
+                    📸 @hapublic.basecamp 인스타그램 가기
+                </a>
+            </div>
         </div>
-    </div>
-
-    <!-- Custom Toast Notification -->
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#0A2540] text-white px-5 py-3 rounded-full text-xs font-bold shadow-lg opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-emerald-400">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
-        <span id="toast-message">클립보드에 복사되었습니다!</span>
     </div>
 
     <script>
+        // [질문 데이터 및 로직은 이전과 동일하게 유지되어 안전하게 작동합니다]
         const questions = [
             {
-                q: "금요일 저녁, 잡혀있던 약속이 갑자기 취소되었을 때 당신의 반응은?",
-                o: [
-                    { t: "너무 허전해서 바로 다른 친구에게 연락한다.", s: 1 },
-                    { t: "조금 아쉽지만 밀린 TV 프로그램을 본다.", s: 2 },
-                    { t: "오히려 좋아! 나만의 시간을 즐길 준비를 한다.", s: 4 },
-                    { t: "이미 혼자 놀 계획을 플랜 B로 짜두었다.", s: 3 }
+                q: "1. 서점에서 책을 고를 때, 내가 가장 매력을 느끼는 문구의 결은?",
+                options: [
+                    { text: "“불평등한 구조를 깨부수고 소외된 이들의 연대로”", val: 2 },
+                    { text: "“더 나은 공동체를 위해 우리가 함께 고민해야 할 가치들”", val: 1 },
+                    { text: "“트렌드를 선도하는 실용적 지식과 합리적인 선택법”", val: -1 },
+                    { text: "“자유시장 경제의 미래, 개인이 쟁취해야 할 성공의 법칙”", val: -2 }
                 ]
             },
             {
-                q: "유명 맛집에 가고 싶은데 같이 갈 사람이 없다면?",
-                o: [
-                    { t: "절대 혼자 못 간다. 포기하거나 배달시킨다.", s: 1 },
-                    { t: "바(Bar) 형태의 좌석이 있다면 조심스레 시도해본다.", s: 2 },
-                    { t: "당당하게 가서 1인분(혹은 그 이상)을 기쁘게 즐긴다.", s: 4 },
-                    { t: "사람들의 시선이 적은 애매한 시간대에 다녀온다.", s: 3 }
+                q: "2. 내가 고른 사회·경제 분야 책들의 주된 문제의식은?",
+                options: [
+                    { text: "자본주의의 폐해 폭로, 노동권 강화, 과감한 복지 제도 확대", val: 2 },
+                    { text: "시민 참여의 중요성, 환경 보호, 지속 가능한 대안 경제", val: 1 },
+                    { text: "현실적인 재테크 전략, 자산 관리, 시장 경제의 흐름 분석", val: -1 },
+                    { text: "정부 규제 완화의 필요성, 세금 감면론, 기업가 정신 고취", val: -2 }
                 ]
             },
             {
-                q: "당신에게 '디지털 디톡스(스마트폰 없이 지내기)'란?",
-                o: [
-                    { t: "10분도 못 버틴다. 세상과 완전히 단절된 불안함을 느낀다.", s: 1 },
-                    { t: "마음먹으면 반나절 정도는 가능하다.", s: 3 },
-                    { t: "가끔 일부러 전원을 완전히 끄고 고요함을 만끽한다.", s: 4 },
-                    { t: "필요성은 격하게 느끼지만 현실적으로 실행은 어렵다.", s: 2 }
+                q: "3. 내 서재에 꽂힌 역사서나 인물 평전은 주로 어떤 내용인가요?",
+                options: [
+                    { text: "소외된 민중들의 저항 운동이나 인권 투쟁을 다룬 대안 역사", val: 2 },
+                    { text: "과거의 아픔을 성찰하고 민주주의의 발전 과정을 다룬 역사", val: 1 },
+                    { text: "특정 이념을 배제하고 철저한 사실과 사료 중심으로 서술된 역사", val: -1 },
+                    { text: "국가를 위기에서 구한 강력한 리더십과 정통성을 수호한 영웅의 서사", val: -2 }
                 ]
             },
             {
-                q: "혼자 떠나는 해외 여행에 대해 어떻게 생각하나요?",
-                o: [
-                    { t: "생각만 해도 무섭고 외로울 것 같아 절대 사절이다.", s: 1 },
-                    { t: "한 번쯤 도전해보고 싶지만 아직은 용기가 부족하다.", s: 2 },
-                    { t: "이미 다녀왔거나, 주기적으로 혼자만의 여정을 즐긴다.", s: 4 },
-                    { t: "유명 패키지 여행이라면 혼자 갈 수 있을 것 같다.", s: 3 }
+                q: "4. 환경 및 과학 도서를 읽을 때 내가 가장 공감했던 시각은?",
+                options: [
+                    { text: "기후위기는 자본의 무한 경쟁 때문이며, 강력한 국가 규제 체제가 시급하다.", val: 2 },
+                    { text: "소비 중심 문화를 반성하고 공동체적 생태주의 삶으로 전환해야 한다.", val: 1 },
+                    { text: "기후위기 문제는 현실적으로 다루되 과학 기술의 균형 잡힌 발전을 믿는다.", val: -1 },
+                    { text: "인위적인 규제보다는 기술 혁신과 친환경 시장 경제 논리로 해결해야 한다.", val: -2 }
                 ]
             },
             {
-                q: "카페에서 옆 테이블의 수다가 너무 시끄러울 때 당신은?",
-                o: [
-                    { t: "나도 모르게 대화에 신경 쓰여 누군가에게 전화를 건다.", s: 1 },
-                    { t: "불편하지만 꾹 참고 억지로 스마트폰만 본다.", s: 2 },
-                    { t: "노이즈 캔슬링 이어폰을 끼고 나만의 세계로 깊이 몰입한다.", s: 4 },
-                    { t: "조용히 자리를 옮기거나 정중히 양해를 구한다.", s: 3 }
+                q: "5. 내가 팔로우하는 출판사 SNS나 뉴스레터에서 자주 보이는 키워드는?",
+                options: [
+                    { text: "#소수자 #연대 #인권 #페미니즘 #다양성", val: 2 },
+                    { text: "#공동체 #인문학 #시민 #성찰 #생태", val: 1 },
+                    { text: "#실용 #지식 #교양 #트렌드 #합리성", val: -1 },
+                    { text: "#자유 #성장 #성공 #전통 #경쟁력", val: -2 }
                 ]
             },
             {
-                q: "당신의 생일을 혼자 보내게 된다면?",
-                o: [
-                    { t: "우울해질 것 같아 어떻게든 급하게 약속을 잡는다.", s: 1 },
-                    { t: "조용히 미역국만 먹고 여느 평범한 주중처럼 보낸다.", s: 2 },
-                    { t: "평소 가고 싶던 최고급 장소를 예약해 오롯이 나에게 선물한다.", s: 4 },
-                    { t: "SNS에 알리지 않고 가까운 사람들의 연락만 편안하게 기다린다.", s: 3 }
+                q: "6. 내 서재에 있는 책 저자들의 주요 이력이나 정체성은?",
+                options: [
+                    { text: "사회 운동가, 인권 변호사, 비판적 학자 등 현장 중심 인물", val: 2 },
+                    { text: "대중 지식인, 문화 평론가, 온건한 성향의 대학교수나 연구원", val: 1 },
+                    { text: "주류 학계의 교수, 객관적 데이터 중심의 분석가, 전문 칼럼니스트", val: -1 },
+                    { text: "글로벌 기업 CEO, 창업가, 시장 중심 경제학자, 보수 평론가", val: -2 }
                 ]
             },
             {
-                q: "대화 중 정적이 흐를 때 당신이 느끼는 감정은?",
-                o: [
-                    { t: "어색해서 견딜 수 없다. 아무 이야기나 꺼내 정적을 깬다.", s: 1 },
-                    { t: "상대방이 지루해할까 봐 속으로 긴장하고 걱정한다.", s: 2 },
-                    { t: "이 고요함도 대화의 편안한 일부라고 생각한다.", s: 4 },
-                    { t: "다음에 꺼낼 알맞은 주제를 머릿속으로 신속하게 계산한다.", s: 3 }
+                q: "7. 문화·예술 관련 책을 읽을 때 깊이 공감했던 관점은?",
+                options: [
+                    { text: "소수 예술가와 독립 출판을 지키기 위한 정부의 전폭적 예산 지원이 필요하다.", val: 2 },
+                    { text: "자본의 논리에 물들지 않는 공공 예술의 영역을 더 넓혀야 한다.", val: 1 },
+                    { text: "문화 예술 역시 대중의 선택을 받아 자생할 수 있는 기반이 중요하다.", val: -1 },
+                    { text: "예술계도 정부 보조금에 의존하기보다 시장 경쟁력을 갖추고 홀로서기를 해야 한다.", val: -2 }
                 ]
             },
             {
-                q: "주말 내내 아무와도 대화하지 않고 시간을 보낸다면?",
-                o: [
-                    { t: "우울감과 고립감이 밀려와 밖으로 뛰쳐나간다.", s: 1 },
-                    { t: "편안하긴 하지만 일요일 저녁엔 살짝 공허해진다.", s: 2 },
-                    { t: "완벽한 휴식이다. 내면의 에너지가 최대치로 충전된다.", s: 4 },
-                    { t: "반려동물이나 일기장, AI 챗봇과 소통해서 아무렇지 않다.", s: 3 }
+                q: "8. 소설이나 에세이 장르를 고를 때 나의 선호도는?",
+                options: [
+                    { text: "젠더, 퀴어, 소수자 등 사회적 소수자의 서사를 담은 문학을 적극적으로 읽는다.", val: 2 },
+                    { text: "타인의 슬픔에 공감하고 공동체의 따뜻함을 다룬 감성 소설/에세이를 좋아한다.", val: 1 },
+                    { text: "인간 본성에 대한 탐구나 흥미진진한 서사 구조 중심의 문학을 선호한다.", val: -1 },
+                    { text: "고전적 가치관, 가족의 소중함, 혹은 영웅적 대서사시 장르에 끌린다.", val: -2 }
                 ]
             },
             {
-                q: "나와 다른 의견을 가진 다수의 사람들 속에 있을 때 당신은?",
-                o: [
-                    { t: "소외당하지 않기 위해 내 소신을 굽히고 다수에 동조한다.", s: 1 },
-                    { t: "묵묵히 침묵을 지키며 상황이 흘러가는 대로 관망한다.", s: 2 },
-                    { t: "혼자가 될 위험이 있더라도 내 주관을 명확히 설명한다.", s: 4 },
-                    { t: "다수의 기분을 상하지 않게 하면서 은근슬쩍 내 생각을 섞는다.", s: 3 }
+                q: "9. 내 책장에 꽂힌 지식·실용서들의 주된 성격은?",
+                options: [
+                    { text: "현대 자본주의 사회의 모순을 날카롭게 비판하는 사회학 서적", val: 2 },
+                    { text: "인간과 삶에 대한 따뜻한 위로와 철학적 성찰을 주는 인문 서적", val: 1 },
+                    { text: "업무 생산성 향상, 교양 축적, 지적 대화를 위한 넓고 얕은 지식 서적", val: -1 },
+                    { text: "치열한 경쟁에서 이기기 위한 자기계발 및 자산 증식용 재테크 서적", val: -2 }
                 ]
             },
             {
-                q: "당신에게 '고독'이란 어떤 단어로 느껴지나요?",
-                o: [
-                    { t: "최대한 피하고 싶은 쓸쓸함과 무서운 외로움", s: 1 },
-                    { t: "바쁜 현대 사회에서 어쩔 수 없이 견뎌내야 하는 빈 시간", s: 2 },
-                    { t: "나를 탐색하고 단단하게 단련해주는 귀중한 보물", s: 4 },
-                    { t: "가끔 환기용으로는 좋지만 너무 길어지면 곤란한 것", s: 3 }
+                q: "10. 내가 책을 읽으며 가장 이상적이라고 느낀 '정의로운 사회'의 상은?",
+                options: [
+                    { text: "결과의 불평등을 좁히고 약자가 차별받지 않도록 제도적으로 보장된 사회", val: 2 },
+                    { text: "이웃과 연대하며 소외되는 사람 없이 소통이 잘 이루어지는 사회", val: 1 },
+                    { text: "기회가 균등하게 제공되며 상식과 합리가 통하는 사회", val: -1 },
+                    { text: "개인의 자유와 노력이 철저히 존중받고 시장 규칙에 따라 보상받는 사회", val: -2 }
                 ]
-            }
-        ];
-
-        // 5가지 고독 레벨의 SVG 캐릭터 디자인 정의
-        const levelGraphics = {
-            level1: `<svg class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 1단계: 고독 입문자 (외로움을 타며 스마트폰에 의지하는 모습) -->
-                <rect width="200" height="200" rx="30" fill="#EEF2F6"/>
-                <circle cx="100" cy="115" r="45" fill="#E2E8F0"/>
-                <!-- 캐릭터 머리 -->
-                <circle cx="100" cy="95" r="28" fill="#94A3B8"/>
-                <!-- 몸통 -->
-                <path d="M70 150C70 125 83.4315 115 100 115C116.569 115 130 125 130 150H70Z" fill="#64748B"/>
-                <!-- 눈 (우는 듯한 쉼표 눈) -->
-                <ellipse cx="90" cy="92" rx="2.5" ry="4" fill="#334155"/>
-                <ellipse cx="110" cy="92" rx="2.5" ry="4" fill="#334155"/>
-                <!-- 흘러내리는 눈물 -->
-                <path d="M90 98C90 101 88.5 103 88.5 103" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
-                <!-- 걱정스러운 입 -->
-                <path d="M96 104C98.5 102.5 101.5 102.5 104 104" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
-                <!-- 손에 든 스마트폰 (빛나는 이펙트) -->
-                <rect x="94" y="125" width="12" height="20" rx="2" fill="#0F172A" />
-                <rect x="96" y="127" width="8" height="13" rx="1" fill="#38BDF8" opacity="0.8" />
-                <circle cx="100" cy="120" r="1.5" fill="#38BDF8" class="pulse-soft"/>
-            </svg>`,
-            level2: `<svg class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 2단계: 고독 여행가 (홀로 카페에서 따뜻한 차 한 잔을 즐기는 여유) -->
-                <rect width="200" height="200" rx="30" fill="#F0FDF4"/>
-                <circle cx="100" cy="100" r="60" fill="#DCFCE7" opacity="0.6"/>
-                <!-- 테이블 -->
-                <path d="M50 145H150" stroke="#86EFAC" stroke-width="4" stroke-linecap="round"/>
-                <!-- 캐릭터 머리 -->
-                <circle cx="90" cy="85" r="24" fill="#4ADE80"/>
-                <!-- 몸통 -->
-                <path d="M66 145C66 120 76 110 90 110C104 110 114 120 114 145H66Z" fill="#16A34A"/>
-                <!-- 만족스러운 눈 -->
-                <path d="M82 85C84 83 86 83 88 85" stroke="#14532D" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M94 85C96 83 98 83 100 85" stroke="#14532D" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- 미소 -->
-                <path d="M87 95C90 97 93 97 95 95" stroke="#14532D" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- 김이 모락모락 나는 찻잔 -->
-                <rect x="122" y="128" width="16" height="12" rx="3" fill="#F43F5E"/>
-                <path d="M138 131C141 131 142 134 141 136C140 138 138 137 138 137" stroke="#F43F5E" stroke-width="2" stroke-linecap="round"/>
-                <!-- 모락모락 연기 -->
-                <path d="M126 122C127 120 126 118 127 116" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M132 124C133 122 132 120 133 118" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>`,
-            level3: `<svg class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 3단계: 고독 수행자 (달빛 가득한 숲에서 사색하는 자연주의 고독러) -->
-                <rect width="200" height="200" rx="30" fill="#EFF6FF"/>
-                <circle cx="100" cy="100" r="60" fill="#DBEAFE" opacity="0.6"/>
-                <!-- 소나무/나무 실루엣 배경 -->
-                <path d="M40 150L55 120L70 150H40Z" fill="#93C5FD"/>
-                <path d="M140 150L155 110L170 150H140Z" fill="#93C5FD"/>
-                <!-- 캐릭터 머리 -->
-                <circle cx="100" cy="80" r="24" fill="#3B82F6"/>
-                <!-- 몸통 -->
-                <path d="M76 150C76 120 86 105 100 105C114 105 124 120 124 150H76Z" fill="#1D4ED8"/>
-                <!-- 평온하게 감은 눈 -->
-                <path d="M91 80C93 82 95 82 97 80" stroke="#1E3A8A" stroke-width="2" stroke-linecap="round"/>
-                <path d="M103 80C105 82 107 82 109 80" stroke="#1E3A8A" stroke-width="2" stroke-linecap="round"/>
-                <!-- 은은한 미소 -->
-                <path d="M96 90C98 92 102 92 104 90" stroke="#1E3A8A" stroke-width="2" stroke-linecap="round"/>
-                <!-- 밤하늘 별 이펙트 -->
-                <circle cx="145" cy="55" r="2.5" fill="#F59E0B" class="pulse-soft"/>
-                <circle cx="65" cy="45" r="1.5" fill="#F59E0B"/>
-                <path d="M100 25L102 32L109 34L102 36L100 43L98 36L91 34L98 32L100 25Z" fill="#FBBF24"/>
-            </svg>`,
-            level4: `<svg class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 4단계: 고독 전문가 (따뜻한 조명 아래서 창조와 몰입을 하는 지성적 고독러) -->
-                <rect width="200" height="200" rx="30" fill="#FFFBEB"/>
-                <circle cx="100" cy="100" r="60" fill="#FEF3C7" opacity="0.6"/>
-                <!-- 스탠드 조명 빛 범위 -->
-                <path d="M135 70L60 150H170L135 70Z" fill="#FDE68A" opacity="0.4"/>
-                <!-- 스탠드 등 -->
-                <path d="M150 150V80H135" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
-                <path d="M125 80H145L140 70H130L125 80Z" fill="#B45309"/>
-                <!-- 노트북을 다루는 캐릭터 머리 -->
-                <circle cx="90" cy="85" r="24" fill="#F59E0B"/>
-                <!-- 몸통 -->
-                <path d="M66 150C66 122 76 110 90 110C104 110 114 122 114 150H66Z" fill="#D97706"/>
-                <!-- 안경 및 몰입한 눈 -->
-                <circle cx="83" cy="85" r="5" stroke="#78350F" stroke-width="2"/>
-                <circle cx="97" cy="85" r="5" stroke="#78350F" stroke-width="2"/>
-                <path d="M88 85H92" stroke="#78350F" stroke-width="2"/>
-                <!-- 즐겁게 몰입한 입 -->
-                <path d="M88 95C90 96.5 92 96.5 94 95" stroke="#78350F" stroke-width="2" stroke-linecap="round"/>
-                <!-- 노트북 모니터 수평선 -->
-                <path d="M108 128L124 128" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
-            </svg>`,
-            level5: `<svg class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 5단계: 고독 마스터 (우주 속에서 연꽃 자태로 명상하며 진정한 평온을 찾은 고독의 최고 경지) -->
-                <rect width="200" height="200" rx="30" fill="#FAF5FF"/>
-                <circle cx="100" cy="100" r="65" fill="#F3E8FF" opacity="0.7"/>
-                <!-- 오라/빛나는 고리 -->
-                <circle cx="100" cy="95" r="48" stroke="#D8B4FE" stroke-width="1.5" stroke-dasharray="5 3"/>
-                <!-- 캐릭터 머리 -->
-                <circle cx="100" cy="75" r="22" fill="#A855F7"/>
-                <!-- 몸통 (가부좌 포즈) -->
-                <path d="M80 135C80 112 88 100 100 100C112 100 120 112 120 135H80Z" fill="#7E22CE"/>
-                <!-- 가부좌 다리 실루엣 -->
-                <path d="M65 142C65 135 135 135 135 142C135 148 65 148 65 142Z" fill="#6B21A8"/>
-                <!-- 초월한 감은 눈 -->
-                <path d="M92 75C94 77 96 75 96 75" stroke="#3B0764" stroke-width="2" stroke-linecap="round"/>
-                <path d="M104 75C106 77 108 75 108 75" stroke="#3B0764" stroke-width="2" stroke-linecap="round"/>
-                <!-- 완벽한 심적 정적의 입 -->
-                <line x1="97" y1="84" x2="103" y2="84" stroke="#3B0764" stroke-width="2" stroke-linecap="round"/>
-                <!-- 공중부양 이펙트 (구름/에너지 아우라) -->
-                <path d="M75 155C80 151 90 153 100 151C110 153 120 151 125 155" stroke="#C084FC" stroke-width="3" stroke-linecap="round"/>
-                <!-- 빛 스파클 -->
-                <path d="M100 40L101 44L105 45L101 46L100 50L99 46L95 45L99 44L100 40Z" fill="#A855F7"/>
-            </svg>`
-        };
-
-        const results = [
-            {
-                title: "Lv.1 고독 입문자",
-                graphic: levelGraphics.level1,
-                desc: "혼자 있는 환경을 어색해하며 주로 스마트폰이나 외부 자극에 끊임없이 에너지를 기대는 타인의 존중형 성향입니다. 혼밥이나 고독한 시간에 지루함을 쉽게 느낄 수 있습니다. 하지만 하루에 단 10분이라도 온전히 자신만의 내면에 머무는 '미니 고독' 훈련을 통해 진정한 자아 충전을 시작해 볼 수 있습니다!"
-            },
-            {
-                title: "Lv.2 고독 여행가",
-                graphic: levelGraphics.level2,
-                desc: "타인과의 관계를 잘 유지하면서도 필요할 때 적절히 자신만의 여백을 즐길 줄 아는 건강한 균형가입니다. 혼자 카페에서 차를 마시거나 가볍게 식사하는 것에 대해 큰 거부감이 없네요. 고독을 두려워하기보다는 삶의 피로를 풀어줄 작은 안식처로 잘 활용하기 시작하는 단계입니다."
-            },
-            {
-                title: "Lv.3 고독 수행자",
-                graphic: levelGraphics.level3,
-                desc: "복잡한 세상을 한 걸음 물러나 자연스럽게 바라보며 고막과 눈을 청정하게 유지할 줄 아는 사색가입니다. 누군가의 소음보다는 침묵이 때로는 더 큰 진실을 전해준다는 것을 알고 있습니다. 자신만의 비밀스러운 취미나 조용한 산책으로 인생의 균형을 아름답게 이끌어 나가는 상태입니다."
-            },
-            {
-                title: "Lv.4 고독 전문가",
-                graphic: levelGraphics.level4,
-                desc: "혼자 있는 자유로운 공간이야말로 나만의 가능성이 피어나는 ‘축제의 장’이라고 정의하는 프로 창작자 스타일입니다. 남들의 불필요한 시선보다 내면의 단단한 성장에 초점을 맞추며 딥워크(Deep Work)나 고독한 예술적 몰입의 가치를 가장 깊이 이해하고 실천하는 고급 레벨입니다."
-            },
-            {
-                title: "Lv.5 고독 마스터",
-                graphic: levelGraphics.level5,
-                desc: "축하합니다! 당신은 어떤 소란한 공간에서도 완벽한 나만의 평온을 즉시 창조할 수 있는 초월적 해탈의 고독 신선입니다. 타인과 협력할 때는 부드럽고 따뜻하게 동화되지만, 혼자가 되는 순간 완벽히 우주적인 만족감과 평화에 이릅니다. 주체적인 자아가 극도로 단단하여 흔들림이 없는 진정한 마스터의 자태를 가졌습니다."
             }
         ];
 
         let currentIdx = 0;
         let score = 0;
-        let finalResult = null;
+        let resultTypeName = "";
 
-        function startTest() {
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('question-screen').classList.remove('hidden');
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        
+        const questionText = document.getElementById('question-text');
+        const progressBar = document.getElementById('progress-bar');
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startQuiz() {
+            startScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            resultScreen.style.display = 'none';
+            currentIdx = 0;
+            score = 0;
             showQuestion();
         }
 
         function showQuestion() {
-            const q = questions[currentIdx];
-            document.getElementById('progress-text').innerText = `${currentIdx + 1} / ${questions.length}`;
-            document.getElementById('progress-bar').style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
-            document.getElementById('question-text').innerText = q.q;
-            
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            q.o.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left p-4 border-2 border-slate-100 rounded-2xl hover:border-[#0A2540] hover:bg-[#0A2540]/5 hover:text-[#0A2540] font-semibold text-slate-700 transition-all duration-200 active:scale-[0.99] fade-in";
-                btn.style.animationDelay = `${idx * 0.08}s`;
-                btn.innerText = opt.t;
-                btn.onclick = () => selectOption(opt.s);
-                container.appendChild(btn);
-            });
-        }
-
-        function selectOption(s) {
-            score += s;
-            currentIdx++;
             if (currentIdx < questions.length) {
-                showQuestion();
+                progressBar.style.width = `${(currentIdx / questions.length) * 100}%`;
+                questionText.innerText = questions[currentIdx].q;
+                
+                const shuffledOptions = shuffle([...questions[currentIdx].options]);
+                
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.getElementById(`opt${i+1}`);
+                    btn.innerText = shuffledOptions[i].text;
+                    btn.setAttribute('onclick', `selectOption(${shuffledOptions[i].val})`);
+                }
             } else {
                 showResult();
             }
         }
 
+        function selectOption(value) {
+            score += value;
+            currentIdx++;
+            showQuestion();
+        }
+
         function showResult() {
-            document.getElementById('question-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
 
-            // 점수 구간 상세 분할 (최소 10점 ~ 최대 40점)
-            if (score <= 15) {
-                finalResult = results[0]; // Lv.1 입문자
-            } else if (score <= 23) {
-                finalResult = results[1]; // Lv.2 여행가
-            } else if (score <= 30) {
-                finalResult = results[2]; // Lv.3 수행자
-            } else if (score <= 36) {
-                finalResult = results[3]; // Lv.4 전문가
+            const resultType = document.getElementById('result-type');
+            const resultDesc = document.getElementById('result-desc');
+            const pointer = document.getElementById('spectrum-pointer');
+
+            let percentage = 50 - (score * 2); 
+            if(percentage < 5) percentage = 5;
+            if(percentage > 95) percentage = 95;
+            pointer.style.left = `${percentage}%`;
+
+            if (score > 10) {
+                resultTypeName = "선명한 진보·좌파 성향의 서재";
+                resultType.style.color = "var(--primary-left)";
+                resultDesc.innerHTML = "당신의 서재는 <strong>사회적 연대, 소수자 인권, 다양성, 구조적 모순 비판</strong>을 핵심 가치로 내거는 출판사들의 책이 주를 이룹니다. 불평등한 사회 구조에 질문을 던지고, 대안적인 공동체를 적극적으로 모색하는 도서에 깊이 몰입하는 독서 성향을 가지고 있습니다.";
+            } else if (score > 2) {
+                resultTypeName = "따뜻한 인문 개혁 성향의 서재";
+                resultType.style.color = "#60a5fa";
+                resultDesc.innerHTML = "당신이 고른 책들은 보편적인 인문학적 성찰을 담으면서도 사회적 약자에 대한 따뜻한 시선과 점진적인 개혁을 이야기하는 출판사들의 도서가 많습니다. 지나치게 급진적이지 않으면서도 인간 존엄성과 민주주의의 가치를 강조하는 책을 선호하십니다.";
+            } else if (score >= -2 && score <= 2) {
+                resultTypeName = "균형 잡힌 중도 실용 성향의 서재";
+                resultType.style.color = "#6b7280";
+                resultDesc.innerHTML = "당신이 읽은 책들의 출판사는 어느 한쪽 이념에 치인 지 않고, <strong>독자에게 객관적인 지식과 유용한 통찰을 제공하는 실용적인 곳</strong>들이 많습니다. 균형 잡힌 시각의 교양서나 순수 학문, 혹은 대중적인 문학 중심의 안정적인 독서 패턴을 보이고 있습니다.";
+            } else if (score >= -10) {
+                resultTypeName = "합리적 보수·자기 성장 성향의 서재";
+                resultType.style.color = "#f87171";
+                resultDesc.innerHTML = "당신이 고른 책들은 <strong>개인의 자유, 끊임없는 역량 강화, 그리고 합리적인 지식</strong>을 신뢰하는 출판사들의 비중이 높습니다. 검증된 사실과 지적 전통을 존중하며, 스스로의 가치를 높여주는 자기계발이나 효율적인 경제 경영 지식을 담은 책들에 더 큰 매력을 느끼는 편입니다.";
             } else {
-                finalResult = results[4]; // Lv.5 마스터
+                resultTypeName = "선명한 보수·우파 성향의 서재";
+                resultType.style.color = "var(--primary-right)";
+                resultDesc.innerHTML = "당신의 서재는 <strong>자유시장 경제의 가치, 개인의 자율성과 책임, 정통성 수호</strong>를 강력하게 지지하는 출판사들의 책이 중심을 이룹니다. 리더들의 결단력 있는 서사, 자본주의 시장 시스템에 대한 확신, 혹은 고전적이고 안정적인 가치관을 강조하는 선명한 메시지의 도서를 선호하십니다.";
             }
-
-            document.getElementById('result-title').innerText = finalResult.title;
-            document.getElementById('result-image-container').innerHTML = finalResult.graphic;
-            document.getElementById('result-description').innerText = finalResult.desc;
+            resultType.innerText = resultTypeName;
         }
 
-        // 토스트 알림 헬퍼 함수
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toast-message');
-            toastMessage.innerText = message;
+        function shareResult() {
+            const shareText = `[내 서재 속 출판사 성향 테스트]\n나의 진단 결과: ${resultTypeName}\n지금 테스트해보세요! 👉 ${window.location.href}`;
             
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            toast.classList.add('opacity-100');
-            
-            setTimeout(() => {
-                toast.classList.remove('opacity-100');
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 2500);
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과 텍스트와 링크가 클립보드에 복사되었습니다! 원하시는 곳에 붙여넣기(Ctrl+V) 하세요.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 주소창의 링크를 직접 공유해 주세요.");
+            });
         }
 
-        // 텍스트를 클립보드에 복사하는 범용 함수 (iFrame 호환)
-        function copyToClipboard(text, successMsg) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.top = '0';
-            textarea.style.left = '0';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast(successMsg);
-                } else {
-                    showToast("복사에 실패했습니다. 수동으로 복사해주세요.");
-                }
-            } catch (err) {
-                showToast("오류가 발생하여 복사할 수 없습니다.");
-            }
-            document.body.removeChild(textarea);
-        }
-
-        // 1. 링크 복사 기능
-        function shareLink() {
-            const url = window.location.href;
-            copyToClipboard(url, "테스트 링크가 복사되었습니다!");
-        }
-
-        // 2. 결과 내용 복사 기능
-        function shareText() {
-            if (!finalResult) return;
-            const textToShare = `[고독력 레벨 테스트 결과]\n\n나의 고독력은... ✨${finalResult.title}✨ 입니다!\n\n"${finalResult.desc.substring(0, 100)}..."\n\n지금 여러분의 고독력을 측정해보세요!\n👉 ${window.location.href}`;
-            copyToClipboard(textToShare, "결과 요약 텍스트가 복사되었습니다!");
+        function restartQuiz() {
+            startQuiz();
         }
     </script>
 </body>

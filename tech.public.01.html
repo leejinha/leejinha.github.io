@@ -9,14 +9,14 @@
     <style>
         :root {
             --primary-left: #3b82f6; /* 진보·좌파 성향 블루 */
-            --primary-right: #ef4444; /* 보수·우파 성향  */
-            --btn-main: #002855;     /* 요청하신 메인 네이비 컬러 */
+            --primary-right: #ef4444; /* 보수·우파 성향 레드 */
+            --btn-main: #002855;     /* 메인 네이비 컬러 */
             --btn-main-hover: #001f42; /* 메인 네이비 호버 색상 */
-            --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #d1dbe5 100%); /* 네이비와 어울리는 은은한 블루 그레이 배경 */
+            --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #d1dbe5 100%); /* 블루 그레이 배경 */
             --card-bg: #ffffff;
-            --text-main: #0f172a;    /* 조금 더 깊이감 있는 네이비 블랙 */
-            --text-muted: #475569;   /* 조화로운 톤의 뮤트 가이드 텍스트 */
-            --shadow-color: rgba(0, 40, 85, 0.08); /* 네이비 톤에 맞춘 부드러운 그림자 음영 */
+            --text-main: #0f172a;    
+            --text-muted: #475569;   
+            --shadow-color: rgba(0, 40, 85, 0.08); 
         }
 
         * {
@@ -41,25 +41,42 @@
             box-shadow: 0 10px 30px var(--shadow-color);
             width: 100%;
             max-width: 580px;
-            padding: 40px 30px;
             text-align: center;
             transition: all 0.3s ease;
+            overflow: hidden; /* 타이틀 박스의 둥근 모서리 적용을 위해 필요 */
         }
 
-        /* 시작 화면 */
-        .start-screen h1 {
+        /* 📌 상단 타이틀 영역 강조 */
+        .title-box {
+            background-color: var(--btn-main);
+            padding: 35px 20px;
+            color: #ffffff;
+        }
+
+        .title-box h1 {
             font-size: 26px;
-            color: var(--text-main);
-            margin-bottom: 18px;
-            word-break: keep-all;
-            line-height: 1.4;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
 
+        .title-box .subtitle {
+            font-size: 15px;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        /* 메인 콘텐츠 영역 (패딩 분리) */
+        .content-box {
+            padding: 40px 30px;
+        }
+
+        /* 시작 화면 줄글 스타일 수정 */
         .start-screen p {
             font-size: 15px;
             color: var(--text-muted);
-            margin-bottom: 32px;
-            line-height: 1.7;
+            margin-bottom: 35px;
+            line-height: 1.6;
             word-break: keep-all;
         }
 
@@ -68,8 +85,8 @@
             background: var(--btn-main);
             color: white;
             border: none;
-            padding: 14px 24px;
-            font-size: 15px;
+            padding: 14px 32px;
+            font-size: 16px;
             font-weight: 700;
             border-radius: 30px;
             cursor: pointer;
@@ -89,7 +106,7 @@
         }
 
         .btn-sub {
-            background: #f0f4f8; /* 네이비와 매칭되는 밝은 블루그레이 음영 */
+            background: #f0f4f8; 
             color: var(--btn-main);
             border: 1px solid #dbe3eb;
         }
@@ -109,7 +126,6 @@
             box-shadow: 0 5px 15px rgba(220, 39, 67, 0.2);
         }
         
-        /* 인스타그램 SVG 아이콘 스타일 */
         .btn-instagram svg {
             width: 18px;
             height: 18px;
@@ -260,7 +276,7 @@
 
         /* 모바일 화면 최적화 미디어 쿼리 */
         @media (max-width: 480px) {
-            .container {
+            .content-box {
                 padding: 30px 20px;
             }
             .action-row {
@@ -278,60 +294,67 @@
 <body>
 
     <div class="container">
-        <!-- 1. 시작 화면 -->
-        <div class="start-screen" id="start-screen">
-            <h1>"너... 그런 책 읽니?" 👀<br><span style="font-size: 18px; font-weight: 400; color: var(--text-muted);">내 서재로 탈탈 털어보는 출판사 성향 테스트</span></h1>
-            <p>"책장만 봐도 그 사람의 사상이 보인다?!" 내가 최근에 지른 책, 침대 머리맡에 둔 책들의 진짜 정체는 무엇일까요? 매번 무작위로 섞이는 질문을 통과하고, 내 서재를 지배한 출판사들의 찐-한 이념 스펙트럼을 확인해 보세요! (※ 뼈 때림 주의 🔨)</p>
-            <button class="btn" onclick="startQuiz()">내 서재 털러가기 🚀</button>
+        <!-- 📌 1. 상단 배너 레이아웃 적용 -->
+        <div class="title-box" id="main-title-box">
+            <h1>"너... 그런 책 읽니?"</h1>
+            <div class="subtitle">내 서재 속 출판사 성향 테스트</div>
         </div>
 
-        <!-- 2. 테스트 진행 화면 -->
-        <div class="quiz-screen" id="quiz-screen">
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progress-bar"></div>
+        <div class="content-box">
+            <!-- 시작 화면 (문구 축소 및 아이콘 제거) -->
+            <div class="start-screen" id="start-screen">
+                <p>내가 고른 책장만 봐도 숨겨진 사상이 보인다?! 침대 머리맡에 둔 책들의 진짜 정체를 탈탈 털어드립니다. 10개의 무작위 질문을 통해 서재를 지배한 출판사들의 찐한 이념 스펙트럼을 지금 확인해 보세요.</p>
+                <button class="btn" onclick="startQuiz()">내 서재 털러가기 🚀</button>
             </div>
-            <div class="question-box">
-                <p class="question-text" id="question-text">질문 텍스트가 들어가는 자리입니다.</p>
-            </div>
-            <div class="answer-options">
-                <button class="option-btn" id="opt1">선택지 1</button>
-                <button class="option-btn" id="opt2">선택지 2</button>
-                <button class="option-btn" id="opt3">선택지 3</button>
-                <button class="option-btn" id="opt4">선택지 4</button>
-            </div>
-        </div>
 
-        <!-- 3. 결과 화면 -->
-        <div class="result-screen" id="result-screen">
-            <p class="result-title">서재 진단 결과</p>
-            <h2 class="result-type" id="result-type">결과 유형</h2>
-            
-            <div class="spectrum-container">
-                <div class="spectrum-bar"></div>
-                <div class="spectrum-pointer" id="spectrum-pointer"></div>
-                <div class="spectrum-labels">
-                    <span style="color: var(--primary-left)">진보·좌파 성향</span>
-                    <span style="color: var(--primary-right)">보수·우파 성향</span>
+            <!-- 2. 테스트 진행 화면 -->
+            <div class="quiz-screen" id="quiz-screen">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="question-box">
+                    <p class="question-text" id="question-text">질문 텍스트가 들어가는 자리입니다.</p>
+                </div>
+                <div class="answer-options">
+                    <button class="option-btn" id="opt1">선택지 1</button>
+                    <button class="option-btn" id="opt2">선택지 2</button>
+                    <button class="option-btn" id="opt3">선택지 3</button>
+                    <button class="option-btn" id="opt4">선택지 4</button>
                 </div>
             </div>
 
-            <div class="result-desc" id="result-desc">
-                상세 설명이 들어가는 자리입니다.
-            </div>
-
-            <!-- 하단 버튼 및 링크 영역 -->
-            <div class="action-group">
-                <div class="action-row">
-                    <button class="btn btn-sub" onclick="shareResult()">결과 링크 복사</button>
-                    <button class="btn" onclick="restartQuiz()">다시 테스트하기</button>
+            <!-- 3. 결과 화면 -->
+            <div class="result-screen" id="result-screen">
+                <p class="result-title">서재 진단 결과</p>
+                <h2 class="result-type" id="result-type">결과 유형</h2>
+                
+                <div class="spectrum-container">
+                    <div class="spectrum-bar"></div>
+                    <div class="spectrum-pointer" id="spectrum-pointer"></div>
+                    <div class="spectrum-labels">
+                        <span style="color: var(--primary-left)">진보·좌파 성향</span>
+                        <span style="color: var(--primary-right)">보수·우파 성향</span>
+                    </div>
                 </div>
-                <a href="https://www.instagram.com/hapublic.basecamp" target="_blank" class="btn btn-instagram">
-                    <!-- 인스타그램 공식 SVG 로고 -->
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                    </svg>
-                    @hapublic.basecamp 바로 가기
-                </a>
+
+                <div class="result-desc" id="result-desc">
+                    상세 설명이 들어가는 자리입니다.
+                </div>
+
+                <!-- 하단 버튼 및 링크 영역 -->
+                <div class="action-group">
+                    <div class="action-row">
+                        <button class="btn btn-sub" onclick="shareResult()">결과 링크 복사</button>
+                        <button class="btn" onclick="restartQuiz()">다시 테스트하기</button>
+                    </div>
+                    <a href="https://www.instagram.com/hapublic.basecamp" target="_blank" class="btn btn-instagram">
+                        <!-- 인스타그램 공식 SVG 로고 -->
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                        @hapublic.basecamp 바로 가기
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -437,6 +460,7 @@
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
         const resultScreen = document.getElementById('result-screen');
+        const mainTitleBox = document.getElementById('main-title-box');
         
         const questionText = document.getElementById('question-text');
         const progressBar = document.getElementById('progress-bar');
@@ -451,6 +475,7 @@
 
         function startQuiz() {
             startScreen.style.display = 'none';
+            mainTitleBox.style.display = 'none'; // 테스트 중에는 상단 큰 타이틀 박스를 숨겨 집중도 향상
             quizScreen.style.display = 'block';
             resultScreen.style.display = 'none';
             currentIdx = 0;
@@ -529,6 +554,7 @@
         }
 
         function restartQuiz() {
+            mainTitleBox.style.display = 'block'; // 재시작 시 상단 타이틀 복원
             startQuiz();
         }
     </script>
